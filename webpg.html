@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto Bulb Toggle</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #222;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+
+  .bulb {
+    font-size: 100px;
+    margin-bottom: 20px;
+    transition: filter 0.3s ease;
+  }
+
+  .bulb.on {
+    filter: drop-shadow(0 0 20px yellow);
+    color: yellow;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background: #ffd54a;
+    cursor: pointer;
+    font-weight: bold;
+    color: #222;
+  }
+
+  button:active {
+    transform: scale(0.98);
+  }
+</style>
+</head>
+<body>
+
+<div id="bulb" class="bulb">💡</div>
+<button id="controlBtn">Stop Auto</button>
+
+<script>
+  const bulb = document.getElementById("bulb");
+  const controlBtn = document.getElementById("controlBtn");
+
+  let isOn = false;
+  let intervalId;
+
+  function toggleBulb() {
+    isOn = !isOn;
+    bulb.classList.toggle("on", isOn);
+  }
+
+  function startAuto() {
+    intervalId = setInterval(toggleBulb, 3000);
+  }
+
+  function stopAuto() {
+    clearInterval(intervalId);
+    intervalId = null;
+  }
+
+  controlBtn.addEventListener("click", () => {
+    if (intervalId) {
+      stopAuto();
+      controlBtn.textContent = "Start Auto";
+    } else {
+      startAuto();
+      controlBtn.textContent = "Stop Auto";
+    }
+  });
+
+  // Start auto toggling when page loads
+  startAuto();
+</script>
+
+</body>
+</html>
